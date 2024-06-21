@@ -1,1 +1,50 @@
+// Pseudo-code for a simple FPS game
 
+// Define constants
+CONSTANT SCREEN_WIDTH = 800
+CONSTANT SCREEN_HEIGHT = 600
+
+// Define player variables
+playerX = SCREEN_WIDTH / 2
+playerY = SCREEN_HEIGHT / 2
+playerAngle = 0
+
+// Define bullet variables
+bullets = []
+
+// Game loop
+WHILE gameIsRunning:
+    // Handle input
+    READ input
+    IF input == "W":
+        // Move player forward
+        playerX += cos(playerAngle) * moveSpeed
+        playerY += sin(playerAngle) * moveSpeed
+    ELSE IF input == "S":
+        // Move player backward
+        playerX -= cos(playerAngle) * moveSpeed
+        playerY -= sin(playerAngle) * moveSpeed
+    ELSE IF input == "A":
+        // Rotate player left
+        playerAngle -= rotateSpeed
+    ELSE IF input == "D":
+        // Rotate player right
+        playerAngle += rotateSpeed
+    ELSE IF input == "SPACE":
+        // Shoot a bullet
+        newBullet = createBullet(playerX, playerY, playerAngle)
+        bullets.add(newBullet)
+    
+    // Update bullets
+    FOR EACH bullet IN bullets:
+        bulletX += cos(bulletAngle) * bulletSpeed
+        bulletY += sin(bulletAngle) * bulletSpeed
+        IF bulletHitsTarget(bullet):
+            bullets.remove(bullet)
+    
+    // Render
+    CLEAR screen
+    DRAW player at (playerX, playerY) facing playerAngle
+    FOR EACH bullet IN bullets:
+        DRAW bullet at (bulletX, bulletY)
+    REFRESH screen
